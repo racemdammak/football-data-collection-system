@@ -1,0 +1,20 @@
+Pass
+Cross
+Duel
+Dribble
+Shot
+Corner
+Goalkeeper Actions
+Cards
+Tackle
+Interception
+Clearance
+Loss Of Ball (pressure)
+Big Chance
+Foul
+Penalty
+Goal
+Assist
+Freekick
+Offside
+Header
