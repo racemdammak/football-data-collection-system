@@ -2,7 +2,7 @@ import customtkinter as ctk
 import re
 
 event_functions = {}
-SPECIAL_EVENTS = {"Corner", "Tackle", "Big Chance", "Foul", "Penalty", "Offside"}
+SPECIAL_EVENTS = {"Corner", "Tackle", "Assist", "Interception", "Clearance", "Big Chance", "Foul", "Penalty", "Offside"}
 
 def show_type_selection(popup, event_name, type_list, on_finish):
     for widget in popup.winfo_children():
@@ -83,7 +83,7 @@ def show_result_page(popup, on_finish, on_back=None):
         popup, text="Finish", command=lambda: on_finish(result_var.get()), fg_color="#41B3A2", text_color="white", font=("Segoe UI", 16)
     )
     btns.append(finish_btn)
-    # Pack buttons side by side, centered below radios
+    # Pack buttons side to side, centered below radios
     btn_frame = ctk.CTkFrame(popup, fg_color="transparent")
     btn_frame.pack(pady=30)
     for btn in btns:
@@ -167,9 +167,46 @@ def open_event_popup(event_name):
             ["Dribbling past opponent", "Dribbled by opponent"],
             dribble_finish
         )
+    elif event_name.lower() == "goalkeeper actions":
+        show_type_selection(
+            popup, "Goalkeeper Actions",
+            ["Save", "High claim", "Short hand pass", "Long hand pass"],
+            on_finish
+        )
+    elif event_name.lower() == "cards":
+        def cards_finish(selected_types, _):
+            print(f"{event_name} types:", selected_types)
+            print("Result:", None)
+            popup.destroy()
+        show_single_choice_page(
+            popup, "Cards",
+            ["Yellow", "Red"],
+            cards_finish
+        )
+
+    elif event_name.lower() == "loss of ball":
+        def loss_finish(selected_types, _):
+            print(f"{event_name} types:", selected_types)
+            print("Result:", None)
+            popup.destroy()
+        show_single_choice_page(
+            popup, "Loss of ball",
+            ["Under pressure", "No pressure"],
+            loss_finish
+        )
+    elif event_name.lower() == "goal":
+        def goal_finish(selected_types, _):
+            print(f"{event_name} types:", selected_types)
+            print("Result:", None)
+            popup.destroy()
+        show_single_choice_page(
+            popup, "Goal",
+            ["Goal", "Own-Goal"],
+            goal_finish
+        )
 
 def special_event_func(event_name):
-    open_event_popup(event_name)
+    pass
 
 def _sanitize_func_name(name):
     return re.sub(r'\W|^(?=\d)', '_', name.strip())
@@ -190,3 +227,25 @@ with open("rules/events.txt", "r", encoding="utf-8") as f:
                 func = _make_event_func(event)
             globals()[_sanitize_func_name(event)] = func
             event_functions[event] = func
+
+def show_single_choice_page(popup, event_name, options, on_finish):
+    for widget in popup.winfo_children():
+        widget.destroy()
+    label = ctk.CTkLabel(popup, text=f"Select {event_name.lower()} type:", font=("Segoe UI", 20, "bold"))
+    label.pack(pady=(30, 20))
+
+    choice_var = ctk.StringVar(value=options[0])
+    for opt in options:
+        radio = ctk.CTkRadioButton(
+            popup, text=opt, variable=choice_var, value=opt, font=("Segoe UI", 16)
+        )
+        radio.pack(anchor="w", padx=60, pady=8)
+
+    def next_page():
+        selected_types = [choice_var.get()]
+        on_finish(selected_types, None)
+
+    finish_btn = ctk.CTkButton(
+        popup, text="Finish", command=next_page, fg_color="#3A6EA5", text_color="white", font=("Segoe UI", 16)
+    )
+    finish_btn.pack(pady=40)
