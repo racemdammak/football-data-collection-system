@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from PIL import Image
 import pandas as pd
-import cv2
 import tkinter.filedialog as fd
 import tkinter.messagebox as mb
 from event_popup import event_functions
