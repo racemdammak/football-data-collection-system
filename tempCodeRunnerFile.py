@@ -1,1 +1,1 @@
-window.
+.after
