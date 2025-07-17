@@ -11,13 +11,19 @@ class VideoPlayer:
         self.height = height
 
         # Try to use GPU decoding
-        try:
-            self.cap = cv2.cudacodec.createVideoReader(self.video_path)
-            self.use_cuda = True
-            self.fps = 25
-            self.total_frames = int(self.cap.format().get('nb_frames', 0))  # Not always available with cudacodec
-        except Exception as e:
-            print("CUDA VideoReader not available, falling back to CPU:", e)
+        if hasattr(cv2, "cudacodec"):
+            try:
+                self.cap = cv2.cudacodec.createVideoReader(self.video_path)
+                self.use_cuda = True
+                self.fps = 25
+                self.total_frames = 0  # cudacodec may not provide frame count
+            except Exception as e:
+                print("CUDA VideoReader not available, falling back to CPU:", e)
+                self.cap = cv2.VideoCapture(self.video_path)
+                self.use_cuda = False
+                self.fps = self.cap.get(cv2.CAP_PROP_FPS)
+                self.total_frames = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        else:
             self.cap = cv2.VideoCapture(self.video_path)
             self.use_cuda = False
             self.fps = self.cap.get(cv2.CAP_PROP_FPS)
