@@ -92,7 +92,7 @@ def open_event_popup(event_name):
         show_single_choice_page(popup, "Goal", ["Goal", "Own-Goal"], save_and_close)
 
 def special_event_func(event_name):
-    pass
+    se.set_special_event(event_name)
 
 def _sanitize_func_name(name):
     return re.sub(r'\W|^(?=\d)', '_', name.strip())

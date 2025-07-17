@@ -1,9 +1,0 @@
-
-RMA,ViniciusJR,Pass,Long pass,Successful,450,54,535,47
-JUV,F.Conceiçao,Cards,Yellow,None,
-JUV,M.Locatelli,Shot,Saved by GK,None,152,151,30,215
-RMA,T.A.Arnold,Pass,Short pass,Successful,369,282,387,323
-JUV,D.Rugani,Dribble,Dribbled by opponent,None,
-RMA,T.Courtois,Goalkeeper Actions,Long hand pass,Successful,120,169,371,68
-JUV,R.K.Muani,Duel,Aerial,Unsuccessful,
-RMA,A.Tchouaméni,Duel,Aerial,Successful,310,170,310,170

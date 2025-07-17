@@ -13,6 +13,11 @@ def set_table_widget(widget):
     global table_widget
     table_widget = widget
 
+def set_special_event(event_name):
+    with open("match\\match_stats.txt", "a", encoding="utf-8") as file:
+        file.write(f"{event_name},None,None,")
+    load_data()
+
 def set_event(event_name, event_type, result):
     with open("match\\match_stats.txt", "a", encoding="utf-8") as file:
         file.write(f"{event_name},{event_type},{result},")
