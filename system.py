@@ -1,3 +1,9 @@
+import os
+import sys
+# Frozen (.exe) builds: run from the exe folder so match/, rules/ and images resolve.
+if getattr(sys, 'frozen', False):
+    os.chdir(os.path.dirname(sys.executable))
+
 import customtkinter as ctk
 from PIL import Image
 import pandas as pd
